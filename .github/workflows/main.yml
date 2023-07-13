@@ -10,15 +10,15 @@ jobs:
     name: Deploy chat app
     runs-on: ubuntu-latest
 
-  steps:
-    - name: checkout
-      uses: actions/checkout@v3
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
 
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'corretto'
-        java-version: 17
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
 
-    - name: Test
-      run: mvn -B test --file pom.xml
+      - name: Test
+        run: mvn -B test --file pom.xml
