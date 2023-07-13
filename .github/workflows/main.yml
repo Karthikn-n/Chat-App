@@ -22,3 +22,29 @@ jobs:
 
       - name: Test
         run: mvn -B test --file pom.xml
+      - name: Unit Tests
+        run: mvn -B test --file pom.xml
+      - name: Build the Application
+        run: |
+          mvn clean
+          mvn -B package --file pom.xml
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: karthikn1118/ci-cd:latestv1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+      - name: Push  to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: true
+          tags: karthikn1118/springworks:latestv1
